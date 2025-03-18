@@ -2,7 +2,8 @@ namespace ConsoleApp1;
 
 public class KontenerNaPlyny : Contener, IHazardNotifier
 {
-    public KontenerNaPlyny(int masa, int wysokosc, float waga, float glebokosc, double maxLadownosc) : base(masa, wysokosc,
+    public KontenerNaPlyny(int masa, int wysokosc, float waga, float glebokosc, double maxLadownosc) : base(masa,
+        wysokosc,
         waga, glebokosc, maxLadownosc)
     {
         NumerSeryjny += Contener.NextNumerSeryjny;
@@ -14,7 +15,7 @@ public class KontenerNaPlyny : Contener, IHazardNotifier
 
     public void ZaladujKontener(int masaLadunku)
     {
-        if (masaLadunku > MaxLadownosc)
+        if (masaLadunku > (MaxLadownosc - MasaLadunku))
         {
             //Throw exception
         }
@@ -25,14 +26,16 @@ public class KontenerNaPlyny : Contener, IHazardNotifier
 
         if (IsDangerous)
         {
-            if (masaLadunku > MaxLadownosc * 0.5)
+            if (masaLadunku > (MaxLadownosc - MasaLadunku) * 0.5)
             {
                 warning();
             }
-        }
-        else if (masaLadunku > MaxLadownosc * 0.9)
+        }else 
         {
-            warning();
+            if (masaLadunku > (MaxLadownosc - MasaLadunku) * 0.9)
+            {
+                warning();
+            }
         }
     }
 
