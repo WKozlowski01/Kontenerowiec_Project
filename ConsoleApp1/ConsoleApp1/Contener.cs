@@ -10,9 +10,9 @@ public abstract class Contener
 
     protected double MasaLadunku { get; set; } = 0;
 
-    protected Contener(int masa, int wysokosc, float waga, float glebokosc,double maxLadownosc)
+    protected Contener(int wysokosc, float waga, float glebokosc,double maxLadownosc)
     {
-        masa = Masa;
+       
         wysokosc = Wysokosc;
         waga = Waga;
         glebokosc = Glebokosc;
@@ -22,8 +22,10 @@ public abstract class Contener
     public int MaxLadownosc { get; set; }
 
 
-    public void OproznijLadunek() { }
+    public virtual void OproznijLadunek()
+    {
+        MasaLadunku = 0;
+    }
 
-    public void ZaladujKontener(int masaLadunku) { }
-    
+    public abstract void ZaladujKontener(int masaLadunku);
 }
