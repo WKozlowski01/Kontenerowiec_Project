@@ -5,10 +5,13 @@ public class KontenerNaPlyny : Contener, IHazardNotifier
     public KontenerNaPlyny(int wysokosc, double waga, int glebokosc, double maxLadownosc) : base(
         wysokosc, waga, glebokosc, maxLadownosc)
     {
+        MaxLadownosc = maxLadownosc;
         NumerSeryjny += Contener.NextNumerSeryjny;
+        MasaCalkiowita = waga;
     }
     private string NumerSeryjny { get; set; } = "KON-L-";
     private bool IsDangerous { get; set; } = false;
+    private double MasaCalkiowita { get; set; }
 
 
     public void ZaladujKontener(int masaLadunku, bool isDangerous = false)
@@ -34,6 +37,7 @@ public class KontenerNaPlyny : Contener, IHazardNotifier
             }
         }
         MasaLadunku += masaLadunku;
+        MasaCalkiowita += masaLadunku;
     }
 
     public void warning()
@@ -43,7 +47,7 @@ public class KontenerNaPlyny : Contener, IHazardNotifier
 
     public override void getInfo()
     {
-        Console.WriteLine("Kontener o numerze: " + NumerSeryjny + "\n" + "o aktualnej masie " + (MasaLadunku + Waga) +" kg" + "\n" +
+        Console.WriteLine("Kontener o numerze: " + NumerSeryjny + "\n" + "o aktualnej masie " + (MasaCalkiowita) +" kg" + "\n" +
                           (IsDangerous ? " Zawiera niebezpieczny ładunek" : "nie zawiera niebezpiczenych ładunków")+ "\n");
     }
 }

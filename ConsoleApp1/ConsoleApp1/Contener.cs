@@ -2,7 +2,7 @@ namespace ConsoleApp1;
 public abstract class Contener
 {
     public int Wysokosc { get; set; }
-    public double Waga { get; set; }
+    public double Waga { get; set; } = 0;
     public int Glebokosc { get; set; }
     protected static int NextNumerSeryjny { get; set; } = 0;
 
@@ -10,7 +10,6 @@ public abstract class Contener
 
     protected Contener(int wysokosc, double waga, int glebokosc,double maxLadownosc)
     {
-       
         Wysokosc = wysokosc;
         Waga = waga;
         Glebokosc = glebokosc;
@@ -18,7 +17,7 @@ public abstract class Contener
         MaxLadownosc = maxLadownosc;
     }
 
-    public double MaxLadownosc { get; set; }
+    protected double MaxLadownosc { get; set; }
 
 
     public virtual void OproznijLadunek()
