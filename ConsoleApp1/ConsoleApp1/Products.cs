@@ -11,6 +11,7 @@ public enum Products
     Cheese,
     Sausage,
     Butter,
-    Eggs
+    Eggs,
+    Default
 
 }

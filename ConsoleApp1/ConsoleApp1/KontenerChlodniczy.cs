@@ -1,8 +1,8 @@
 namespace ConsoleApp1;
 
 public class KontenerChlodniczy : Contener
-{ 
-    public string NumerSeryjny { get; set; } = "KON-C-";
+{
+    private string NumerSeryjny { get; set; } = "KON-C-";
     public Products Product { get; set; }
     public double Temperature { get; set; }
 
@@ -19,45 +19,41 @@ public class KontenerChlodniczy : Contener
         { ConsoleApp1.Products.Butter, 20.5 },
         { ConsoleApp1.Products.Eggs, 19.0 }
     };
-    
-    public KontenerChlodniczy(int wysokosc, float waga, float glebokosc,double maxLadownosc,double temperature,Products product) : base(wysokosc, waga, glebokosc,maxLadownosc)
+
+    public KontenerChlodniczy(int wysokosc, double waga, int glebokosc, double maxLadownosc, double temperature,
+        Products product) : base(wysokosc, waga, glebokosc, maxLadownosc)
     {
         NumerSeryjny += Contener.NextNumerSeryjny;
         Temperature = temperature;
         Product = product;
     }
-    public override void ZaladujKontener(int masaLadunku)
-    {
-        Console.WriteLine("You Need to give product category ");
-    }
 
-    public void ZaladujKontener(int masaLadunku,Products product)
+    public void ZaladujKontener(double masaLadunku, Products product = ConsoleApp1.Products.Default)
     {
         if (product != Product)
         {
-            Console.WriteLine("Container is for "+Product +" you can't put in diffrent product!");
-            
+            Console.WriteLine("Container is for " + Product + " you can't put in diffrent product!");
+            return;
         }
-        else
+        
+        if (Temperature < Products[product])
         {
-            if (Temperature < Products[product])
-            {
                 Console.WriteLine("Temperature in this container is to low for this kind of product!");
-            }
-            else
-            {
-                Product = product;
-            
-                if (masaLadunku > (MaxLadownosc - MasaLadunku))
-                {
-                    throw new OverflowException("You try to overfill container "+ NumerSeryjny+ " !");
-            
-                }else
-                {
-                    MasaLadunku = masaLadunku;
-                }
-            }
+                return;
         }
+
+        if ( (masaLadunku + MasaLadunku) > MaxLadownosc )
+        { 
+            throw new OverfillException("You try to overfill container " + NumerSeryjny + " !");
+        }
+        MasaLadunku += masaLadunku;
+        Console.WriteLine("Kontener załadowany ładunkiem o masie: "+ masaLadunku);
     }
-    
+
+    public override void getInfo()
+    {
+        Console.WriteLine("Kontener o numerze: " + NumerSeryjny + " przeznaczony na " + Product + "\n" +
+                          "o aktualnej masie: " + (Waga + MasaLadunku) +" kg"+ "\n"+ "oraz temperaturze przechowywania " +
+                          Temperature + "\u00b0C"+"\n" );
+    }
 }

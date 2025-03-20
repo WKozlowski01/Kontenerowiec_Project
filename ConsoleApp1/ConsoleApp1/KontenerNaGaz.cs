@@ -2,35 +2,39 @@ namespace ConsoleApp1;
 
 public class KontenerNaGaz : Contener, IHazardNotifier
 {
-    public string NumerSeryjny { get; set; } = "KON-G-";
-    public int Pressure { get; set; }
+    private string NumerSeryjny { get; set; } = "KON-G-";
+    public double Pressure { get; set; } = 1.0;
 
-    public KontenerNaGaz(int wysokosc, float waga, float glebokosc, double maxLadownosc) : base(wysokosc, waga, glebokosc, maxLadownosc)
+    public KontenerNaGaz(int wysokosc, double waga, int glebokosc, double maxLadownosc) : base(wysokosc, waga,
+        glebokosc, maxLadownosc)
     {
         NumerSeryjny += Contener.NextNumerSeryjny;
     }
-    
+
     public override void OproznijLadunek()
     {
         MasaLadunku = MasaLadunku * 0.05;
+        Console.WriteLine("Konter rozładowny, w środku pozostało: "+MasaLadunku+ " kg ładunku");
     }
 
-    public override void ZaladujKontener(int masaLadunku)
+    public void ZaladujKontener(int masaLadunku)
     {
-        if (masaLadunku > (MaxLadownosc - MasaLadunku))
+        if ((masaLadunku + MasaLadunku) > MaxLadownosc)
         {
-            throw new OverflowException("You try to overfill container: "+NumerSeryjny+ " !");
-            
+            throw new OverflowException("You try to overfill container: " + NumerSeryjny + " !");
         }
-        else
-        {
-            MasaLadunku = masaLadunku;
-        }
+        MasaLadunku += masaLadunku;
+        
     }
-
 
     public void warning()
     {
         Console.WriteLine("Niebezpieczńśtwo związane z opróżnieniem kontenera " + NumerSeryjny);
+    }
+
+    public override void getInfo()
+    {
+        Console.WriteLine("Kontener o numerze: " + NumerSeryjny + "\n" + "o aktualnej masie " + (MasaLadunku + Waga) +
+                          " kg" + "\n" + "jest pod ciśnieneim " + Pressure + " atmosfer"+ "\n");
     }
 }
