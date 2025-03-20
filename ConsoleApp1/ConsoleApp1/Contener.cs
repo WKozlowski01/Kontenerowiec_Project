@@ -7,6 +7,10 @@ public abstract class Contener
     protected static int NextNumerSeryjny { get; set; } = 0;
 
     public double MasaLadunku { get; set; } = 0;
+    
+    public double MasaCalkowita { get; set; } = 0;
+    
+    public bool NaStatku { get; set; } = false;
 
     protected Contener(int wysokosc, double waga, int glebokosc,double maxLadownosc)
     {
@@ -15,6 +19,7 @@ public abstract class Contener
         Glebokosc = glebokosc;
         NextNumerSeryjny++;
         MaxLadownosc = maxLadownosc;
+        MasaCalkowita = waga;
     }
 
     protected double MaxLadownosc { get; set; }
@@ -23,9 +28,12 @@ public abstract class Contener
     public virtual void OproznijLadunek()
     {
         MasaLadunku = 0;
-        Console.WriteLine("Kontener rozładowany");
+        Console.WriteLine("Kontener rozładowany\n");
+        MasaCalkowita = Waga;
     }
 
     public abstract void getInfo();
+
+    public abstract string getId();
 
 }

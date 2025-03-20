@@ -7,11 +7,11 @@ public class KontenerNaPlyny : Contener, IHazardNotifier
     {
         MaxLadownosc = maxLadownosc;
         NumerSeryjny += Contener.NextNumerSeryjny;
-        MasaCalkiowita = waga;
+     
     }
     private string NumerSeryjny { get; set; } = "KON-L-";
     private bool IsDangerous { get; set; } = false;
-    private double MasaCalkiowita { get; set; }
+    
 
 
     public void ZaladujKontener(int masaLadunku, bool isDangerous = false)
@@ -19,7 +19,7 @@ public class KontenerNaPlyny : Contener, IHazardNotifier
         IsDangerous = isDangerous;
         if (masaLadunku > (MaxLadownosc - MasaLadunku))
         {
-            throw new OverflowException("You try to overfill container " + NumerSeryjny + " !");
+            throw new OverflowException("You try to overfill container " + NumerSeryjny + " !\n");
         }
         
         if (IsDangerous)
@@ -37,17 +37,22 @@ public class KontenerNaPlyny : Contener, IHazardNotifier
             }
         }
         MasaLadunku += masaLadunku;
-        MasaCalkiowita += masaLadunku;
+        MasaCalkowita += masaLadunku;
     }
 
     public void warning()
     {
-        Console.WriteLine("Niebezpieczńśtwo związane z przepełnieniem w kontenerze " + NumerSeryjny);
+        Console.WriteLine("Niebezpieczńśtwo związane z przepełnieniem w kontenerze " + NumerSeryjny+"\n");
     }
 
     public override void getInfo()
     {
-        Console.WriteLine("Kontener o numerze: " + NumerSeryjny + "\n" + "o aktualnej masie " + (MasaCalkiowita) +" kg" + "\n" +
+        Console.WriteLine("Kontener o numerze: " + NumerSeryjny + "\n" + "o aktualnej masie " + (MasaCalkowita) +" kg" + "\n" +
                           (IsDangerous ? " Zawiera niebezpieczny ładunek" : "nie zawiera niebezpiczenych ładunków")+ "\n");
+    }
+
+    public override string getId()
+    {
+        return NumerSeryjny;
     }
 }

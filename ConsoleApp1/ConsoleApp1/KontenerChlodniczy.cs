@@ -5,7 +5,6 @@ public class KontenerChlodniczy : Contener
     private string NumerSeryjny { get; set; } = "KON-C-"; 
     private Products Product { get; set; } 
     public double Temperature { get; set; }
-    public double MasaCalkiowita { get; set; }
 
     private Dictionary<Products, double> Products = new Dictionary<Products, double>()
     {
@@ -27,37 +26,43 @@ public class KontenerChlodniczy : Contener
         NumerSeryjny += Contener.NextNumerSeryjny;
         Temperature = temperature;
         Product = product;
-        MasaCalkiowita = waga;
+        
     }
 
     public void ZaladujKontener(double masaLadunku, Products product = ConsoleApp1.Products.Default)
     {
+        
         if (product != Product)
         {
-            Console.WriteLine("Container is for " + Product + " you can't put in diffrent product!");
+            Console.WriteLine("Container is for " + Product + " you can't put in diffrent product!\n");
             return;
         }
         
         if (Temperature < Products[product])
         {
-                Console.WriteLine("Temperature in this container is to low for this kind of product!");
+                Console.WriteLine("Temperature in this container is to low for this kind of product!\n");
                 return;
         }
         
         if ( (masaLadunku + MasaLadunku) > MaxLadownosc )
         { 
-            throw new OverfillException("You try to overfill container " + NumerSeryjny + " !");
+            throw new OverfillException("You try to overfill container " + NumerSeryjny + " !\n");
         }
        
         MasaLadunku += masaLadunku;
-        MasaCalkiowita += masaLadunku;
-        Console.WriteLine("Kontener załadowany ładunkiem o masie: "+ masaLadunku);
+        MasaCalkowita += masaLadunku;
+        Console.WriteLine("Kontener załadowany ładunkiem o masie: "+ masaLadunku+"\n");
     }
 
     public override void getInfo()
     {
         Console.WriteLine("Kontener o numerze: " + NumerSeryjny + " przeznaczony na " + Product + "\n" +
-                          "o aktualnej masie: " + MasaCalkiowita +" kg"+ "\n"+ "oraz temperaturze przechowywania " +
+                          "o aktualnej masie: " + MasaCalkowita +" kg"+ "\n"+ "oraz temperaturze przechowywania " +
                           Temperature + "\u00b0C"+"\n" );
+    }
+
+    public override string getId()
+    {
+        return NumerSeryjny;
     }
 }
